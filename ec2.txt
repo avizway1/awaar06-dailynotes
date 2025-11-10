@@ -130,8 +130,6 @@ Private Key : (.pem) : Download and store in our laptop.
 
 Both the keys required to connect to ec2 instance. Designed for secure authentication with encryption.
 
-Step 5 : Choose network Settings
-
 
 Step 5 : Choose network settings
 
@@ -163,6 +161,81 @@ Private IP : unique within the network, Wont work outside of your network..
 
 1. Terminate : Delete : you dont need this instane and its data anymore..
 2. STOP : We have an option to start the instance again.. We dont loss any data.. 
+
+==============
+
+Linux : 
+
+Step 1 : Choose tags
+
+Step 2 : Choose AMI (Amazon machiene Image) : Linux
+
+Step 3 : Choose instance type
+
+Step 4 : Choose an Existing keypair / Create a new keypair
+
+Step 5 : Choose Network
+
+SG --> SSH --> Port 22
+
+Step 6 : Choose storage 
+
+Step 7 : Review and launch
+
+linux : Open Source Operating System : 
+Free to use.. Source code is available, anyone case use it without liceses.. Distribute..
+Secure : Linux is less prone to malware, viruses..
+Performance : TO run linux OS, we dont need high config hardware.. (OS consumes very less resources)
+
+ubuntu
+fedora
+redhat/rhel (RedHat enterprise linux)
+oracle linux
+amazon linux
+centos
+kali linux
+debian
+puppy linux
+parrot os
+alma linux
+alpine
+bookwarm
+raspbian
+
+
+Linux Connect options : 
+
+Option 1 : browser connect : (SSH should be open for everyone) : CHoose instance, click on "connect", choose "EC2 Instance Connect" --> connect
+
+Option 2 : Default terminal / command prompt.. 
+(win + R --> cmd)--> verify ssh status.. ssh
+
+ssh -i "keypair" ec2-user@<public-ip>
+
+ssh -i "awar06-lnx.pem" ec2-user@13.235.74.146
+
+Option 3 : Putty
+https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+
+option 4 : github
+
+Option 5 : MobaXterm
+
+
+fix permissions error in windows : 
+
+icacls "keypair" /inheritance:r
+icacls "keypir" /deny Everyone:F
+icacls "keypair" /grant:r "%USERNAME%:R"
+
+
+
+Unix --> 1970 (OS) --> bell labs --> closed source
+Unix style OS --> Linux --> open source
+
+
+
+
 
 
 
