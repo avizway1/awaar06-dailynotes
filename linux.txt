@@ -173,11 +173,98 @@ tar -xzvf myfiles.tar.gz
 
 ====
 
-
-echo 
+echo "hello from Aviz"			--> THis command displays the output in terminal
+echo "hello" > output.txt		--> redirect the output to output.txt file
+ls > output.txt
 
 > 		--> Redirect the output to the given file, It will overwrite the existing information
 >> 		--> Appends the output to the given file, It will add new info to the existing information
+
+
+====
+
+rpm : Redhat Package manager  : Problem with Automatic Dependencies resolution and packages retrive
+
+rpm -ivh package.rpm
+rpm -Uvh package.rpm
+rpm -e package.rpm
+
+yum : Yellowdog updater modified : it can resolve dependencies automatically and retrives packages from repo (local/global repos).
+
+yum update
+yum install <package>
+yum search <package>
+yum remove <package>
+
+
+dnf : Dandified YUM : latest package manager, Replacing yum, Its deafult package manager for amazon linux 2023
+Faster dependencies resolution.. 
+
+dnf install <package-name>
+dnf remove <package>
+dnf search <package>
+dnf list installed
+
+Repo location : /etc/yum.repos.d/ (.repo format)
+
+
+dnf list
+dnf list --installed
+dnf list --installed | grep <pkg-name>
+dnf list --available
+dnf search httpd			--> Search for apache
+dnf info httpd				--> get more info about the package
+dnf install tree
+which tree
+dnf install httpd -y		
+dnf reinstall httpd -y
+dnf remove httpd -y
+
+dnf history					--> displas the history performed using dnf
+dnf history undo <ID>		--> This will undo the operation we perfomed using dnf
+
+sudo 						--> Superuser and do
+sudo su						--> Switch to root user
+sudo su -					--> Switch to root user
+sudo -i						--> Switch to root user
+
+
+service httpd status		--> Simplified command
+
+systemctl status httpd			--> to know the status of httpd service
+systemctl start httpd			--> to start httpd service
+systemctl restart httpd			--> httpd service will be restarted
+systemctl enable httpd			--> Make httpd service as logon service (service starts automatically after restart)
+systemctl start httpd --now
+
+========
+
+Process Management (PID) : a unique identifier assigned by OS to each running process.
+
+
+top 			--> shows realtime view of running processes
+sleep 300 
+ps aux 			--> shows detailed list of all processes for all users
+					a --> all users
+					u --> user/owned process
+					x --> not attached to terminal
+
+pidof <name>
+pidof httpd			--> displays all the process ids related to httpd
+
+htop				--> Interactive version of top (better ui)
+kill <processid>	--> kills the defined process
+kill -9 <proc-id>	--> Forcefully kills the process, we use when normal kill is not working
+
+pstree				--> Shows the process tree in hierarchy structure
+pstree | less
+
+uptime				--> shows the system uptime
+free -h				--> Shows memory usage
+free -s 2
+
+=====
+
 
 
 
