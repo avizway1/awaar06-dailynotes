@@ -432,6 +432,7 @@ cloudtrail
 EOF
 
 ===
+
 sed --> Stream Editor : it edits text automatically without opening the file.
 
 
@@ -447,11 +448,114 @@ sed -i 's/s3/cloudwatch/g' aws.txt		--> add parameter to change all the occuranc
 
 sed '/cloudwatch/d' 					--> Deletes all lines matches with word
 
-sed -n '1,3p' aws.txt 					--> DSisplays from line 1 to 3
+sed -n '1,3p' aws.txt 					--> Displays from line 1 to 3
 
 sed -n '5p' aws.txt 					--> Displays only line 5
 
 sed '/iam/a new servcie adds here' aws.txt		--> adds a new line after iam line
+
+
+====
+
+
+SCP : 
+
+Works between linux machines only.. 
+
+WinScp : Windows laptop <--> Linux ec2 instance 
+
+scp <options> source destination
+
+scp file.txt username@instance-ip:/path-inside-instance
+
+scp -i keypair.pem file.txt username@instance-ip:/home/ec2-user
+
+scp -r foldername username@instance-ip:/path-inside-instance
+
+scp -i keypair.pem -r foldername username@instance-ip:/path-inside-instance
+
+scp -i keypair.pem username@instance-ip:/path-inside-instance .
+
+====
+
+ip addr
+ip link
+
+want to list all TCP/UDP ports 
+
+
+ss -tulnp					--> lists open ports with associated process names
+ss -tulnp | grep 80
+
+sudo lsof -i :80			--> Checks the specific port is open and which user is using it.
+
+telnet <remote-instance-ip> <port-num>
+openssl s_client -connect <remote-instance-ip>:<port-num>
+
+openssl s_client -connect 13.51.64.84:80
+
+
+To verify nameserver / server resolutions: 
+dig google.com
+nslookup google.com
+host google.com
+
+====
+
+CRON JOBS:
+
+dnf install cronie -y		-->	Install crone package
+   40  systemctl enable crond --now
+   41  sudo systemctl enable crond --now
+   42  sudo systemctl status crond
+   
+
+crontab -l 					--> list configured jobs
+crontab -e
+
+===
+
+
+How to measure volume performance:
+
+
+IOPS : Input and output operations per second
+
+Block size : 4 kb, 8kb, 16kb
+latency : the time taken to process a single I/O operation
+Throughput : at what rate data trasferred.. Mb/s, gb/s
+
+IOPS = throughput x 1024 / BlockSize
+
+---
+
+
+root volume = contains OS, without this we cannt launch an ec2 instance
+
+root volume = gp2, gp3, io1 and io2
+addl volume = gp2, gp3, io1, io2, sc1, st1 and standard
+
+gp2 and gp3 : general purpise SSD : Most common workloads will use this volume type.. 
+
+gp2 : Min 1gb, max 16 tb
+gp3 : min 1 gb, max 64 TiB
+
+--
+
+io1 and io2 : If any workload that require specific IOPS count.. 
+
+io1 : Min 4 gb, max 16 tb
+io2 : min 4 gb, max 64 TiB
+
+--
+
+
+
+
+
+
+
+
 
 
 
