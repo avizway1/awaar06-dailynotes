@@ -10,7 +10,7 @@ Linux Directory Structure :
 
 /boot (boot loader files) : Contains linux kernel and boot configurations.. Contains Essential files for OS booting.. 
 
-/dev (Device files) : Contains files that represents hardqre devices (Hard disks).. 
+/dev (Device files) : Contains files that represents hardware devices (Hard disks).. 
 
 /etc (Configuration files) : Stores system wide configurqtions.. (user pwd: /etc/passwd). System settings and service management related..
 
@@ -515,6 +515,11 @@ crontab -e
 
 ===
 
+init 6					--> restart
+init 0					--> shutdown
+
+===
+
 
 How to measure volume performance:
 
@@ -530,10 +535,16 @@ IOPS = throughput x 1024 / BlockSize
 ---
 
 
+AWS EBS volume types:  gp2, gp3, io1, io2, sc1, st1 and standard..
+
 root volume = contains OS, without this we cannt launch an ec2 instance
 
 root volume = gp2, gp3, io1 and io2
 addl volume = gp2, gp3, io1, io2, sc1, st1 and standard
+
+---
+
+SSD : gp2, gp3, io1 and io2
 
 gp2 and gp3 : general purpise SSD : Most common workloads will use this volume type.. 
 
@@ -545,9 +556,87 @@ gp3 : min 1 gb, max 64 TiB
 io1 and io2 : If any workload that require specific IOPS count.. 
 
 io1 : Min 4 gb, max 16 tb
-io2 : min 4 gb, max 64 TiB
+io2 : min 4 gb, max 64 TiB. (Min: 100 IOPS.. Max: 100000)
 
 --
+
+HDD : Hard disk drive : bit older.. less performance compared to SSD..
+
+Throughput optimised HDD / st1 : Suitable for bigdata, data warehousing and log processing.. 
+COld HDD / sc1 : Less perf than st1.. less cost.. 
+Min: 125 gb.. Max: 16 TB
+
+---
+
+standard (magnetic) : low cost storage solution.. Less used.. Min : 1gb max 1 TB
+
+---
+
+lsblk
+df -Th
+file -s 
+mkfs -t xfs
+mount <vol> <dir-name>
+xfs_growfs
+growpart
+
+
+lsblk : how many volumes we have (OS detected) (It detects volume that even not used by OS)
+volume name : nvme0n1
+Volume path: /dev/nvme0n1
+
+df -Th		--> Shows OS used volumes along with type of file system and volumes in human readable format.
+Shows only mounted volumes..
+
+Volume and ec2 instance should be in same AZ.. 
+
+Create a new volume (size: gb) in same az as existing ec2 instance.. Attach the volume to ec2 instance..
+
+New volume name : nvme1n1
+New Volume path: /dev/nvme1n1
+
+Windows: FAT32, NTFS, ReFS
+Linux : ext3, ext4 and xfs
+
+Verify file system by running below command
+
+file -s /dev/nvme1n1		(returns: data --> No file system.. XFS --> file system presented)
+
+mkfs -t xfs /dev/nvme1n1
+
+mount /dev/nvme1n1 newvol/
+
+When we run mount command, a temp entry creates in "/etc/mtab" file.. This file refresh after reboot.. To make this vol perm mounted to the directory.. grab the entry and write it to "/etc/fstab" file..
+
+/dev/nvme1n1 /home/ec2-user/newvol xfs rw,seclabel,relatime,attr2,inode64,logbufs=8,logbsize=32k,sunit=8,swidth=8,noquota 0 0
+
+mount -all
+
+====
+
+To increase an existing volume size, first increase the size in AWS console.. then we need to perform OS level operations..
+
+xfs_growfs -d /home/ec2-user/newvol				--> This will increase the existing volume file system..
+
+====
+
+TO increase the root volume size.. First increase the volume size in AWS console.. Then Identify the root volume partition name..
+
+growpart <volname> <part-number>
+
+growpart /dev/nvme0n1 1
+
+Then, reboot the instance
+
+** In AWS, We dont have any option to decrease the volume size.. 
+
+==
+
+
+
+
+
+
 
 
 
