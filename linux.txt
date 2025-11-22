@@ -632,7 +632,6 @@ Then, reboot the instance
 
 ==
 
-
 DLM : We can automate the snapshot creation process (periodically).. 
 
 Choose Instance : All the volumes attached to that instance.. (Do you want to Exclude root volume)  
@@ -646,12 +645,123 @@ Do you want to copy this snapshot to other region.? or other account automatical
 
 ====
 
+lsblk -f 
+
+NAME          FSTYPE FSVER LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+nvme0n1                                                                              
+├─nvme0n1p1   xfs          /     9a57ac2f-bfe7-4e29-bf89-56caddc22c97    5.9G    25% /
+├─nvme0n1p127                                                                        
+└─nvme0n1p128 vfat   FAT16       9682-52BE                               8.7M    13% /boot/efi
+nvme1n1       xfs                49fe2293-8670-4afb-ae18-937fe3263901    1.9G     2% /home/ec2-user/newvol
+nvme2n1       xfs                49fe2293-8670-4afb-ae18-937fe3263901 
+
+---
+
+To fix this issue: 
+sudo dnf install -y xfsprogs
+
+generate a new UUID:
+sudo xfs_admin -U generate /dev/nvme2n1
+
+lsblk -f
+
+mount /dev/nvme2n1 /home/ec2-user/tryvol
+
+---
+
+In my current project, We have scheduled ec2 snapshots backup using DLM service, Based on environment and client SLA, we have configured backup frequency.. We are using ec2 instance tags to pick the instances from DLM service.. We have not fixed with one schedule for backup and retention.. schedule varies from environment to environment.. Ex: production, We have scheduled backup for every 12 hrs.. but UAT and Dev & others configured to have backup for every 24 hrs.. 
+backup retention is configured based on environment.. for production: 7 days, NonProd: 3 days..
+
+---
+
+Requirement : Need 10 ec2 instance with all custom settings.. install packages i.e; tree, apache, volume (2gb)..
+
+Option 1 : Launch Instance-1 configure everything.. Deliver.. Now take insatnce-2, configure and deliver....
+
+Option 2 : Launch Instance-1 configure everything --> Create a AMI (GoldenAMI) --> Launch 9 instances from GAMI..
 
 
+---
 
 
+dnf install httpd tree -y
+systemctl enable httpd --now
+systemctl status httpd
+
+DocumentRootPath: /var/www/html/
+
+Create / copy all your webcontent to this locaiton..
+
+vim index.html --> Add your webcontent			--> http://43.205.242.132/
+vim sandeep.html --> Add your webcontent		--> http://43.205.242.132/sandeep.html
 
 
+nvme1n1
+/dev/nvme1n1
+
+file -s /dev/nvme1n1
+
+mkfs -t xfs /dev/nvme1n1
+cd /opt
+
+mkdir newvol
+
+mount /dev/nvme1n1 newvol/
+
+tail -n 1 /etc/mtab
+
+vim /etc/fstab
+
+mount -all
+
+--> enabled password login for ec2-user and created avinash user.. 
+
+===
+
+Mandatory : you have to stop ec2 instance to upgrade to higher confi.. 
+Recommended : for best result, you can follow.. 
+
+===
+
+Stop the instance --> Choose "Instance settings" --> "Image and template" --> "create image"
+
+Launch couple of instance from GAMI and verify the output.
+
+==
+
+Requirement : Increase the instance configuration from "t3.micro" to "t3.small"
+
+you have to stop ec2 instance to upgrade to higher confi.. We cannot perform this while instance is in running state.. 
+
+
+--> Public IP will change when we perform Stop and start.. (*Reboot --> Public IP wont chnage)
+
+http://13.127.254.77/
+
+13.201.87.212
+
+Elastic IP / EIP : We can generate an EIP and associate with an ec2 insatnce.. We will have fixed IP.. *EIP cost additinally
+
+13.203.253.110
+
+
+====
+
+Create a CRQ Change request : t3.micro --> t3.small
+
+CAB / Change Advisory Board : We have to present our change : 
+--> When it is planned.?							: Weekend (Saturday Morning - 04:00 AM)
+--> Is it client facing.? 							: No
+--> Any clinet approvals required.?					: No
+--> Does it involve with budgeting approvals.?		: yes, But minimul
+--> Does it required any downtime.?					: yes, approx 1 hr
+--> What is the rollback plan.?						: yes, change config to t3.micro
+--> What are the teams involved in this CRQ.? 		: production support, db, app.. 
+--> Have you created task for all the involved teams.? : yes
+--> Are you performing any Pre-CRQ steps 			: backup/snapshot
+--> Who do the validation post change.? 			: production support, application, aws
+
+==> Every org/project will have a monthly maintenance window / Green Zone window :  
 
 
 
