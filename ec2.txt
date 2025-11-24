@@ -344,8 +344,8 @@ http : 80
 https: 443
 ssh : 22
 rdp : 3389
-mysql : 1433
-mssql : 3306
+mysql : 3306
+mssql : 1433
 nfs : 2049
 ---
 
