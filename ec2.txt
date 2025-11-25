@@ -373,8 +373,6 @@ EFS Sg --> 2049 --> Anywhere/MyIP/custom --> choose "custom" and enter "ec2 inst
 2. EFS Sg --> 2049 --> Anywhere/MyIP/custom --> choose "custom" and enter "ec2 instances SG"
 
 
-
-
 dnf install httpd -y
 systemctl enable httpd --now
 
@@ -390,6 +388,63 @@ mount | grep nfs			--> Run this comamnd to know, on what all the path NFS is mou
 
 
 ----
+
+Cloudwatch Alarms: It monitors the AWS resources and triggers actions based on predefined threshoulds. We can integrate it with other services i.e; SNS.. 
+
+CW has 2 types of monitorings:
+1. Basic Monitoring : resource graphs updates for every 5 min interval
+2. Detailed Monitoring : resource graphs updates for every 1 min interval
+
+With Default cloudwatch monitoring, We cannot monitor "memory Usage" and "Disk space availability" metrics.. We have to Configure CW agent inside ec2 instance to get these metrics.. 
+
+Metric : CPU Usage, Network, status checks, disk usages
+Threshold : "Selected Metric" usage exceeding 80% for 5 min or more.. 
+Action : Send an Email.. Trigger an ASG.. Trigger a Lambda functon..
+
+
+dnf install stress -y
+
+nproc					--> To know cpu count
+
+
+CPU Stress
+stress --cpu 2 --timeout 600
+
+Memory Stress
+stress --vm 2 --vm-bytes 512M --timeout 60 
+
+---
+
+Alert types in 3rd party tools:
+Warning : 70% or more CPU, we will get warning alert
+Critical : 90% or more CPU, we will get critical alert
+
+---
+
+Stop Protection : Prevent ec2 instance stop action from the console. If you run "init 0"/ shutdown operation from OS level, It will stop the instance..
+Terminate Protection : Prevent ec2 instance Delete/terminate action. If you run "init 0"/ shutdown operation from OS level, It will terminate the instance..
+
+Shutdown behaviour : What should happen to the instance when we initialise shutdown from os level
+1. Stop (Default)
+2. Terminate
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
