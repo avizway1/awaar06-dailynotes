@@ -175,7 +175,7 @@ Requirement : We are using Storage service extensively, We need a dedicated stao
 
 IAM Users will have 2 types of Accesses
 1. AWS Management console access (Username, Password and Sign-In URL) : Browser login
-2. Programatic Access (AccessKeyID and SecretAccess Key) : AWS CLI Install --> Command Prompt
+2. Programatic Access (AccessKeyID and SecretAccessKey) : AWS CLI Install --> Command Prompt
 
 
 Implict Allow : If we provide S3 Access to a user, he can access only s3 service, he cannot access any other service.. Remaining all services access will be debied..

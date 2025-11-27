@@ -406,7 +406,6 @@ dnf install stress -y
 
 nproc					--> To know cpu count
 
-
 CPU Stress
 stress --cpu 2 --timeout 600
 
@@ -422,11 +421,103 @@ Critical : 90% or more CPU, we will get critical alert
 ---
 
 Stop Protection : Prevent ec2 instance stop action from the console. If you run "init 0"/ shutdown operation from OS level, It will stop the instance..
+
 Terminate Protection : Prevent ec2 instance Delete/terminate action. If you run "init 0"/ shutdown operation from OS level, It will terminate the instance..
 
 Shutdown behaviour : What should happen to the instance when we initialise shutdown from os level
 1. Stop (Default)
 2. Terminate
+
+---
+
+--> Production Support Team will receive the alert.. verify alert status..
+--> They log an incident.. (AWS, Application)
+--> Verify the metric.. Open a bridge call (NOC group / PMT )
+--> What are the teams involved on this resources..
+
+---
+
+EventBridge : 
+
+EventDriven Process : 
+Scheduled Processes : 
+
+Rules : 
+Schedules : 
+
+
+{
+  "source": ["aws.ec2"],
+  "detail-type": ["EC2 Instance State-change Notification"],
+  "detail": {
+    "state": ["stopping", "stopped"],
+    "instance-id": ["i-0e44a06fa86ac1046"]
+  }
+}
+
+
+
+
+{
+  "version": "0",
+  "id": "57214924-6034-f6f7-0564-feaeea76448c",
+  "detail-type": "EC2 Instance State-change Notification",
+  "source": "aws.ec2",
+  "account": "982424467695",
+  "time": "2025-11-26T02:43:26Z",
+  "region": "us-east-1",
+  "resources": [
+    "arn:aws:ec2:us-east-1:982424467695:instance/i-0e44a06fa86ac1046"
+  ],
+  "detail": {
+    "instance-id": "i-0e44a06fa86ac1046",
+    "state": "stopping"
+  }
+}
+
+---
+
+
+Any IAM user will have 2 types of accesses.. 1. Management console (un, pwd, browser).. 2. Programatic Access (AccessKeyID and SecretAccessKey)
+
+Pre-Req: Create an IAM user with Programatic Access
+
+AWS CLI : https://aws.amazon.com/cli/
+
+To configure AWS CLI, run "aws configure"
+Enter "AccesskeyID", "SecretAccessKey", "Region" and "output format"..
+
+aws sts get-caller-identity
+
+aws s3 ls
+
+aws s3 mb s3://bucketname
+
+aws ec2 describe-instances
+
+Add "--debug" argument to know what actually happening backend
+
+aws s3 ls s3://avinash-qcli-test --recursive --human-readable --summarize
+
+--> We can use profiles to access multiple AWS accounts
+
+aws configure --profile prd
+aws s3 ls --profile prd
+
+aws configure --profile uat
+aws s3 ls --profile uat
+
+=========
+
+aws login
+
+
+aws login --profile prd
+
+
+
+
+
 
 
 
