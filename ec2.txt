@@ -478,4 +478,64 @@ Schedules :
 ---
 
 
+Any IAM user will have 2 types of accesses.. 1. Management console (un, pwd, browser).. 2. Programatic Access (AccessKeyID and SecretAccessKey)
+
+Pre-Req: Create an IAM user with Programatic Access
+
+AWS CLI : https://aws.amazon.com/cli/
+
+To configure AWS CLI, run "aws configure"
+Enter "AccesskeyID", "SecretAccessKey", "Region" and "output format"..
+
+aws sts get-caller-identity
+
+aws s3 ls
+
+aws s3 mb s3://bucketname
+
+aws ec2 describe-instances
+
+Add "--debug" argument to know what actually happening backend
+
+aws s3 ls s3://avinash-qcli-test --recursive --human-readable --summarize
+
+--> We can use profiles to access multiple AWS accounts
+
+aws configure --profile prd
+aws s3 ls --profile prd
+
+aws configure --profile uat
+aws s3 ls --profile uat
+
+=========
+
+aws login
+
+
+aws login --profile prd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
