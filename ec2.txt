@@ -514,6 +514,137 @@ aws login
 
 aws login --profile prd
 
+========
+
+[Environment]-[Platform]-[ServiceType]-[client-id]-[S.No]
+
+P-LNX-DBA-YES-01	--> PLNXDBAYES01
+
+Environments: 
+
+P --> production
+U --> UAT
+Q --> QA
+D --> Dev
+S --> Sandbox
+T --> Training
+
+Platform : OS
+
+WIN --> Windows
+LNX --> Linux
+
+Service Type: 
+
+APP --> Application Server
+DBS --> Databse Server
+WEB --> Web Server
+ADS --> Active Directory Server
+MBX --> mail Exchange Server
+HDP --> hadoop Dist Server
+
+Client :
+
+HDF
+ICI
+YES
+XYZ
+
+======
+
+Tags: 
+
+Platform : Windows
+Environment : Production
+Client : ICICI
+Cost Center : AAZAA
+Schedule : Daily
+
+===
+
+1. Create an IAM role and attach role to all the ec2 instances to manage these resources from Systems Manager / SSM.
+2. We should have appropriate tags to the resources (Easy our job to pick the resources)..
+
+
+===
+
+Userdata: We can pass comamnds to the instance while "we are launching".. 
+
+
+#!/bin/bash
+dnf install httpd -y
+systemctl enable httpd --now
+echo "<h1>This is my Userdata webpage</h1>" >> /var/www/html/index.html
+echo "<h2>test data</h2>" >> /var/www/html/index.html
+
+
+#!/bin/bash
+useradd avinash
+usermod -aG wheel avinash
+
+
+---
+
+SSM 
+
+run comamnd : Run commands inside ec2 instances without logging into OS.
+Fleet manager : We can see and track OS filesystems, users and processes without logging into OS.
+Session Manager : We can connect to EC2 instances without opening port 22/3389 at SG level.
+Parameter Store : We can store non-sensitive information that required to run our application..
+
+general process : Developers hardcode their credentials into "application.properties" file.. Who can read that file, can get the sensitive info.. 
+
+--> We can create a entry in parameter store and store the info..
+
+We can configure application to call the parameter whenerver application required the same info.. We are eliminating hardcoading the credentials..
+--> Secrets manager for sensitive info and also that requires rotation.. 
+--> Parameter store for non-sensitive info
+
+
+Layer 4 LB : Security guard at main gate..  : Network Load balancer (NLB).. (IP Address + Port + TCP)
+Layer 7 LB : Receptionist at Hotel.. (ALB) http/https.. URL.. DOmain.. Headers, Cookies, Query parameter..
+
+ELB : Elastic Load Balancer
+
+ALB : Application Load Balancer : layer 7 LB : http and https.. : Round robin algorith..
+NLB : Network Load balancer : Layer 4 LB : TCP, UDP, TLS..
+
+Classic Load Balancer : Outdates.. AWS Stopped supporting.. 
+
+
+#!/bin/bash
+dnf install httpd -y
+systemctl enable httpd --now
+echo "<h1>This is my web Server - 1A </h1>" >> /var/www/html/index.html
+echo "<h2>from ap-south-1a</h2>" >> /var/www/html/index.html
+echo "<h1>healthy</h1>" >> /var/www/html/status.html
+
+
+
+dnf install httpd -y
+systemctl enable httpd --now
+echo "<h1>This is my 8080 Server</h1>" >> /var/www/html/index.html
+echo "<h1>healthy</h1>" >> /var/www/html/status.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
