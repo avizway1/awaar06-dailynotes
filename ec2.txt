@@ -601,11 +601,30 @@ We can configure application to call the parameter whenerver application require
 --> Parameter store for non-sensitive info
 
 
+Layer 4 LB : Security guard at main gate..  : Network Load balancer (NLB).. (IP Address + Port + TCP)
+Layer 7 LB : Receptionist at Hotel.. (ALB) http/https.. URL.. DOmain.. Headers, Cookies, Query parameter..
+
+ELB : Elastic Load Balancer
+
+ALB : Application Load Balancer : layer 7 LB : http and https.. : Round robin algorith..
+NLB : Network Load balancer : Layer 4 LB : TCP, UDP, TLS..
+
+Classic Load Balancer : Outdates.. AWS Stopped supporting.. 
+
+
+#!/bin/bash
+dnf install httpd -y
+systemctl enable httpd --now
+echo "<h1>This is my web Server - 1A </h1>" >> /var/www/html/index.html
+echo "<h2>from ap-south-1a</h2>" >> /var/www/html/index.html
+echo "<h1>healthy</h1>" >> /var/www/html/status.html
 
 
 
-
-
+dnf install httpd -y
+systemctl enable httpd --now
+echo "<h1>This is my 8080 Server</h1>" >> /var/www/html/index.html
+echo "<h1>healthy</h1>" >> /var/www/html/status.html
 
 
 
