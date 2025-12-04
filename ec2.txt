@@ -672,9 +672,42 @@ http status code:
 4XX --> CLient Side errors
 5XX --> Server Side errors
 
+----
+Dec 4th
+----
 
+metadata : Data about the data.. 
 
+We can use a metadata url to query instance to get information about the instance..
 
+curl http://169.254.169.254/latest/meta-data/
+
+ami-id
+ami-launch-index
+ami-manifest-path
+block-device-mapping/
+events/
+hostname
+iam/
+identity-credentials/
+instance-action
+instance-id
+instance-life-cycle
+instance-type
+local-hostname
+local-ipv4
+mac
+managed-ssh-keys/
+metrics/
+network/
+placement/
+profile
+public-hostname
+public-ipv4
+public-keys/
+reservation-id
+security-groups
+services/
 
 
 
