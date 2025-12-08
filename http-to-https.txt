@@ -1,13 +1,8 @@
-
-
-
-
-
 Pre-Requisites:
 Create A record for your domain with Instance IP Address.. 
 
-avinash.learnaws.today.com
-www.avinash.learnaws.today.com
+learnaws.today.com
+www.learnaws.today.com
 
 Verify output with nslookup.. It should resolve to ec2 instance IP Address..
 
@@ -18,12 +13,11 @@ Create a configuration file first..
 
 vim /etc/httpd/conf.d/learnawstoday.conf
 
-
 ---
 
 <VirtualHost *:80>
-    ServerName avinash.learnaws.today
-    ServerAlias www.avinash.learnaws.today
+    ServerName learnaws.today
+    ServerAlias www.learnaws.today
     DocumentRoot /var/www/html
     
     <Directory /var/www/html>
@@ -41,7 +35,49 @@ sudo systemctl restart httpd
 
 sudo apachectl configtest
 
-sudo certbot --apache -d avinash.learnaws.today -d www.avinash.learnaws.today
+sudo certbot --apache -d learnaws.today -d www.learnaws.today
+
+sudo systemctl restart httpd
 
 
 
+========
+LOAD BALANCER EXAMPLE
+========
+
+_____________________________________
+http to https redirection for Apache
+_____________________________________
+
+Open Apache configuration file : vim /etc/httpd/conf/httpd.conf
+Add a rewrite rule to the VirtualHost section as below
+
+<VirtualHost *:80>
+RewriteEngine On
+RewriteCond %{HTTP:X-Forwarded-Proto} =http
+RewriteRule .* https://%{HTTP:Host}%{REQUEST_URI} [L,R=permanent]
+</VirtualHost>
+
+
+Save file and restart the service
+
+
+
+_____________________________________
+Http to https redirection for Nginx 
+_____________________________________
+
+
+Open nginx configuration file :  /etc/nginx/nginx.conf
+Add a below entry
+
+server {
+    listen 80;
+    server_name _;
+    if ($http_x_forwarded_proto = 'http'){
+    return 301 https://$host$request_uri;
+    }
+}
+
+
+Save file and restart the service
