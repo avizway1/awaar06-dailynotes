@@ -165,14 +165,57 @@ Pre-Check for Design considerations:
 1. How big VPC we need.? Ans: 2000 --> 192.168.0.0/20 --> 4096 IPs
 2. How many subnets we need to create.?
 	2.1 Public Subnet
-		2.1 Web 		--> (192.168.0.0/26 & 192.168.0.64/26) 
+		2.1 Web (ap-south-1a & ap-south-1b)			--> (192.168.0.0/26 & 192.168.0.64/26) 
 	2.2 Private Subnet
-		2.2.1 App		--> (192.168.1.0/24 & 192.168.2.0/24)
-		2.2.1 DB		--> (192.168.3.0/24	& 192.168.4.0/24)
-		2.2.2 lambda	--> (192.168.5.0/24	& 192.168.6.0/24)
+		2.2.1 App	(ap-south-1a & ap-south-1b)		--> (192.168.1.0/24 & 192.168.2.0/24)
+		2.2.1 DB	(ap-south-1a & ap-south-1b)		--> (192.168.3.0/24	& 192.168.4.0/24)
+		2.2.2 lambda (ap-south-1a & ap-south-1b)	--> (192.168.5.0/24	& 192.168.6.0/24)
 3. Any plans for future explansions.?
 	Reserve an IP range for future use. (192.168.8.0/22	& 192.168.12.0/22 & 192.168.7.0/24)
 		
+		
+		
+		
+D: 10/Dec/2025		
+
+Step 1 : Create a VPC - (CIDR : 192.168.0.0/20) (cvpc-proj-001)
+
+1 Subnet = 1 AZs.. 
+
+Step 2 : Create Subnets Inside the CustomVPC.. 
+
+cvpc-proj-web-1a : ap-south-1a : 192.168.0.0/26 
+cvpc-proj-web-1b : ap-south-1b : 192.168.0.64/26
+
+cvpc-proj-app-1a : ap-south-1a : 192.168.1.0/24
+cvpc-proj-app-1b : ap-south-1b : 192.168.2.0/24
+
+cvpc-proj-db-1a : ap-south-1a : 192.168.3.0/24
+cvpc-proj-db-1b : ap-south-1b : 192.168.4.0/24
+
+Step 3 : create an IGW / Internet gateway and Associate with Custom VPC.
+*One VPC can have only one IGW
+
+Step 4 : Create routetables for Public and Private route
+
+Public Route : Added a route 0.0.0.0/0 via Internertt gateway.. Navigate to "subnet Association" and attach "public Subnets"
+
+Private Route : Navigate to "subnet Association" and attach "Private Subnets"
+
+Step 5 (optional) : Enable DNS hostnames at VPC level settings. 
+--> Choose the public Subnets, Enable "auto assign public ip address"
+
+---
+
+NAT Gateway : provides internet to private subnet resources without compromisinf on Security part. NAT should run in CVPC public subnet. It needs an EIP.. 
+
+--> need to update the route table with NAT, so that private subnet resources can access internet..
+
+---
+
+
+
+
 
 
 
