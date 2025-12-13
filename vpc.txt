@@ -289,17 +289,37 @@ Step 6 : Edit Memberaccount VPC route table with "CentralNW" account CIDR range.
 Step 7 : Edit CentralNW VPC route table with "Member Account" CIDR range.
 
 
+----
+
+A VPN is a technology that creates a secure encrypted connection over a "public" network so that traffic behaves as if it is on a private network.
+
+Encryption
+Authentication
+Secure Tunnening
+
+Client-to-site VPN : laptop --> Site
+Remote Access VPN : user laptop --> VPN --> office network
+Site-to-Site VPN / s2s vpn : Conection between 2 diff networks..  On-Premise DataCenter <--> AWS VPC
+
+Customer gateways : 
+Virtual private gateways / VPG : 
+Site-to-Site VPN connections : 
 
 
+Step 1 : Create a customer gateway with your corporate/client network's public IP
+Step 2 : Create a Virtual private gateway
+Step 3 : use both of the components and create a site-to-site vPN.. and download the configuration from aws console and share it with firewall/netwrk team, when they configure TUnnels will be up, so communicaiton flow happens...
 
+----
 
+AWS Direct Connect : Its Physical network connection between our corporate network and AWS network.. 
 
+---
 
+IPv4 : NAT gateway
+If we are using IPv6, To provide internet to private subnet instance, we have to use "Egress only internet gateways"..
 
-
-
-
-
+---
 
 
 
