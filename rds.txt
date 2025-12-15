@@ -1,0 +1,59 @@
+
+
+RDS : 
+
+hardware --> OS --> Install DB --> Configuration --> HA/FT --> backup --> 
+ec2 --> Choose OS --> Install DB --> Configuration --> HA/FT --> backup
+RDS --> Fully managed solution
+
+Step 1: Create DB subnet group with custom vpcs private db subnets
+
+amazon aurora : (mysql / postgresql) : 
+mysql : mysql workbench
+mssql : ssms sql server management studio
+postgre sql : pgadmin, dbviewer
+mariadb : mysql, dbviewer
+oracle : toad
+ibm db2 : enterprise tool for db2
+
+
+CREATE SCHEMA schooldb;
+
+SHOW DATABASES;
+
+USE Schooldb;
+
+CREATE TABLE students (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(30),
+    age INT,
+    grade VARCHAR(10)
+    );
+    
+SHOW TABLES;
+
+INSERT INTO students (name, age, grade) VALUES ('Avonash', 36, 10);
+INSERT INTO students (name, age, grade) VALUES ('Anudeeo', 34, 10);
+
+SELECT * FROM students;
+
+UPDATE students SET age = 35 WHERE name = 'Avonash';
+
+SET SQL_SAFE_UPDATES = 0;
+
+---
+
+mysql -h <hostname> -u <username> -P <port-num> -p
+
+mysql -h rds.learnaws.today -u dbadmin -P 3306 -p
+
+--
+
+
+
+
+
+
+
+
+
