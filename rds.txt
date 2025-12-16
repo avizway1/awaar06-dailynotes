@@ -8,7 +8,7 @@ RDS --> Fully managed solution
 
 Step 1: Create DB subnet group with custom vpcs private db subnets
 
-amazon aurora : (mysql / postgresql) : 
+amazon aurora : (mysql / postgresql compatable) : 
 mysql : mysql workbench
 mssql : ssms sql server management studio
 postgre sql : pgadmin, dbviewer
@@ -42,6 +42,8 @@ UPDATE students SET age = 35 WHERE name = 'Avonash';
 SET SQL_SAFE_UPDATES = 0;
 
 ---
+
+dnf install mariadb105 -y	
 
 mysql -h <hostname> -u <username> -P <port-num> -p
 
