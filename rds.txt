@@ -51,7 +51,18 @@ mysql -h rds.learnaws.today -u dbadmin -P 3306 -p
 
 --
 
+Elasticache: in-memory Cahcing service.. 
+2 open source caching..
+	1. memcacheD
+	2. Redis (better Authentication)
 
+---
+
+OLTP : Online Transactional process : RDS
+OLAP : Online Analytical Process : Redshift
+
+Amazon Redshift : Datawarehousing.. 
+Centralised system to store, integrate and analyse large set of historical data from lot of sources (application, database, logs, CRM, ERP...)
 
 
 
