@@ -3,12 +3,13 @@ S3 : Object based storage
 EBS : block based storage
 EFS : Storage over network
 
-S3 = AWS version Google Drive/OneDrive/Dropbox/icloud
+S3 = Simple Storage Service : AWS version Google Drive/OneDrive/Dropbox/icloud
 
-bucket = folder
+bucket = folder / Directory
 S3 bucket name should be unique.
 Min : 3 char, max: 63 char..
 Should contain only lowercase amnd 0-9 and . and -
+Should not have two consecutive . (..)
 Should not start with .
 should not end with .
 
@@ -27,7 +28,94 @@ https://s3.region.amazonaws.com/bucketname/object-name
 Storage classes
 Versioning
 Life Cycle RUle
+
 Replication
-Encryption
 Events
 Bucket Policy
+
+Encryption
+
+------------------
+
+
+Pricing : 
+Size of the data
+For API calls to access data
+Data Retrival
+
+
+Storage Classes : 
+
+Durability : 99.999999999% (Chances to loss your data)..
+Availability : varies for each storqage class..
+
+
+S3 Standard : General Purpose storage for "frequently accessed data".. 
+You can access data without delays..
+Designed for availability : 99.99% 
+AZ : >=3 AZ
+
+S3 Standard-IA / Infrequently access :  S3 Stanfdard-IA is for the data that is accessed less frequently, but requires rapid access when needed..
+You can access data without delays..
+Designed for availability : 99.9% 
+AZ : >=3 AZ
+
+S3 OneZone-IA : Recreatable, infrequently accessed data (once a month) with milliseconds access.. 
+You can access data without delays..
+Designed for availability : 99.5% 
+AZ : 1 AZ
+
+
+Glacier Instant Retrieval : Long-lived archive data accessed once a quarter with instant retrieval in milliseconds..  Designed for availability : 99.9% 
+Glacier Flexible Retrieval (formerly Glacier) : Long-lived archive data accessed once a year with retrieval of minutes to hours..Designed for availability : 99.99% 
+Glacier Deep Archive : Long-lived archive data accessed less than once a year with retrieval of hours. Designed for availability : 99.99% 
+
+We can't access data immedeatly when required.. We need to initialise the data restoration.. It depends on the storage class we choose.. 
+
+Bulk retrieval : Typically within 5-12 hours.
+Standard retrieval : Typically within 3-5 hours.
+Expedited retrieval : Typically within 1-5 minutes when retrieving less than 250 MB.
+
+---
+
+Intelligent-Tiering : Data with changing or unknown access patterns: 99.9%
+
+---
+
+versioning : helps to Track changes happening on the file by creating a new versioned object..
+helps to restore data to currect state, when any accidental overwrites happens..
+Helps to restore the file, if any accidental deletes happens..
+
+
+delete : Delete marker creates.. Set version to show.. and delete the "delete marker" to get your object back..
+permanently delete : gone forever
+
+---
+
+Life Cycle management Rule : 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
