@@ -171,19 +171,68 @@ KMS CMK			AWS					Full			Yes
 SSE-C			You/We				Full			Limited 
 
 
+========
+
+Static Website Hosting : 
+--> No Server required to host website.
+--> Defaulty we will get s3 perf for our website.
+--> If you want to map a domain name to s3 bucket, You Bucket name should be same as DOmain Name.
 
 
+HTTP Status Codes:
+
+2xx : OK/Success
+3xx : Redirection error
+4xx : Client Side error
+5xx : Server Side error
+
+---
+
+S3 performance : 
+3500 PUT/COPY/POST/DELETE Requests per second per prefix.
+5500 GET/HEAD requests per second per prefix.
+
+How to Imrpove Performance:
+1. Maintain uniqueness in object names.
+2. Use multiple prefixes.
+3. Use Multipart Upload for large objects.
+
+aws s3api create-multipart-upload --bucket my-test-bucket --key movie.zip
+
+---
+
+S3 Consistency Model : 
+
+Strong Consistency for all read-after-write operations: 
+you upload/update/delete a file.. success.. you try to access the file --> you get response
+
+---
+
+Object Lock : 
+
+Governance: Users with specific IAM permissions can overwrite or delete protected object versions during the retention period.
+Compliance: No users can overwrite or delete protected object versions during the retention period.
+
+---
+Metrics: Defsultly we get "total no of obj and total size". Enable filters, if we need addl metrics..
+
+Use "Storage lens" default dashboard to monitor your entire s3 platform resources.
+
+Use IAM Access Analyzer to identify the resources shared over internet or across the accounts.
+---
+
+Transfer Accelerator : 
+
+https://s3-accelerate-speedtest.s3-accelerate.amazonaws.com/en/accelerate-speed-comparsion.html?region=ap-south-1&origBucketName=amzn-s3-demo-bucket
 
 
+Cloudfront / CDN (Content Delivery Network) : AWS uses its edge locations to cache the data to customer's nearby locations.. AWS has 700+ edge locatioon across the globe.. 
 
+---
 
+AWS Snow Family : Transfer data without using internet.. AWS sends a device, you copy data and send the device back.. 
 
-
-
-
-
-
-
+AWS Snow mobile : Petabyte scale container.. 
 
 
 
