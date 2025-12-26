@@ -234,6 +234,17 @@ AWS Snow Family : Transfer data without using internet.. AWS sends a device, you
 
 AWS Snow mobile : Petabyte scale container.. 
 
+---
+
+Cloudfront ; CDN - Content Delivery Network..
+
+--> No need to make s3 bucket pu8blic, We can use origin access identity settings to enable data transfer between cfd and s3 service.
+--> Invalidation : helps to clear the cache from edge locations, so that we can deliver latest data to end customers.
+--> geoLocation Restriction : We can allow/deny user requests from specific countries.
+
+---
+
+WAF : Web Application firewall : 
 
 
 
